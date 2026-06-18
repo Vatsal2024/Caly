@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Caly AI — Built for CAs & CS</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0F1117;
+      --paper: #F7F6F2;
+      --accent: #1C5CFF;
+      --accent-soft: #E8EEFF;
+      --muted: #6B7280;
+      --border: #E2E0DA;
+      --ledger: #D4EDDA;
+      --ledger-dark: #1A6B35;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* HERO */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 96px 48px 80px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(40px, 6vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 12px rgba(28,92,255,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(28,92,255,0.3); }
+
+    .btn-secondary {
+      background: white;
+      color: var(--ink);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--ink); }
+
+    /* DOCUMENT FLOW VISUAL */
+    .flow-section {
+      max-width: 860px;
+      margin: 0 auto 80px;
+      padding: 0 48px;
+    }
+
+    .flow-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 32px 1fr 32px 1fr;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-step {
+      text-align: center;
+      padding: 24px 16px;
+    }
+
+    .flow-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      font-size: 22px;
+    }
+
+    .flow-icon.green { background: var(--ledger); }
+    .flow-icon.blue { background: var(--accent-soft); }
+    .flow-icon.amber { background: #FEF3C7; }
+
+    .flow-step h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .flow-step p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .flow-arrow {
+      text-align: center;
+      color: var(--border);
+      font-size: 24px;
+    }
+
+    /* PROBLEMS */
+    .problems {
+      background: var(--ink);
+      color: white;
+      padding: 80px 48px;
+    }
+
+    .problems-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .problems h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.5px;
+      margin-bottom: 48px;
+      line-height: 1.15;
+      color: white;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .problem-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .problem-card .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .problem-card p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+    }
+
+    /* FEATURES */
+    .features {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 48px;
+    }
+
+    .features h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.5px;
+      margin-bottom: 48px;
+      line-height: 1.15;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .feature-item {
+      border-top: 2px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .feature-item.accent-border { border-color: var(--accent); }
+
+    .feature-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .feature-item p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* CTA FOOTER */
+    .cta-section {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: var(--muted);
+      margin-bottom: 36px;
+      font-size: 17px;
+    }
+
+    footer {
+      padding: 24px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 48px; }
+      .flow-section { padding: 0 20px; }
+      .flow-card {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .flow-arrow { transform: rotate(90deg); }
+      .problems { padding: 60px 20px; }
+      .features { padding: 60px 20px; }
+      .feature-list { grid-template-columns: 1fr; }
+      .cta-section { padding: 60px 20px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <span class="logo-dot"></span>
+      Caly AI
+    </div>
+    <a href="#waitlist" class="nav-cta">Request Early Access</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">🇮🇳 Built for Indian CA &amp; CS firms</div>
+    <h1>Your practice.<br/><em>Automated.</em></h1>
+    <p>Caly uses AI to handle document collection, PDF processing, and reconciliation — so you can focus on advice, not paperwork.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn-primary">Join the Waitlist</a>
+      <a href="#how" class="btn-secondary">See how it works</a>
+    </div>
+  </section>
+
+  <section class="flow-section" id="how">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div class="section-label" style="display:inline-block;">End-to-end pipeline</div>
+      <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(26px,4vw,38px); letter-spacing:-0.5px; margin-top:12px; line-height:1.15;">From client chaos to<br/>final ready documents</h2>
+    </div>
+
+    <div style="position:relative;">
+      <!-- Connector line -->
+      <div style="position:absolute; top:36px; left:calc(8.33% + 18px); right:calc(8.33% + 18px); height:2px; background: linear-gradient(90deg, #D4EDDA, #E8EEFF, #FEF3C7, #E8EEFF, #D4EDDA, #E8EEFF); z-index:0;"></div>
+
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:12px; position:relative; z-index:1;">
+
+        <div style="text-align:center;">
+          <div style="width:52px;height:52px;border-radius:14px;background:#D4EDDA;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;border:3px solid white;box-shadow:0 0 0 2px #D4EDDA;">📋</div>
+          <h3 style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink);">Request Docs</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.5;">Caly messages your clients on WhatsApp, asking exactly what's needed — per client, per case.</p>
+        </div>
+
+        <div style="text-align:center;">
+          <div style="width:52px;height:52px;border-radius:14px;background:#E8EEFF;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;border:3px solid white;box-shadow:0 0 0 2px #E8EEFF;">🔁</div>
+          <h3 style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink);">Auto Follow-ups</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.5;">Pending documents? Caly follows up automatically — politely, on schedule, without you lifting a finger.</p>
+        </div>
+
+        <div style="text-align:center;">
+          <div style="width:52px;height:52px;border-radius:14px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;border:3px solid white;box-shadow:0 0 0 2px #FEF3C7;">💬</div>
+          <h3 style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink);">Answer Queries</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.5;">Clients confused about what to send? AI answers their questions and guides them to upload the right file.</p>
+        </div>
+
+        <div style="text-align:center;">
+          <div style="width:52px;height:52px;border-radius:14px;background:#E8EEFF;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;border:3px solid white;box-shadow:0 0 0 2px #E8EEFF;">🗂️</div>
+          <h3 style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink);">Classify & Organise</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.5;">Every document received is instantly classified — bank statement, invoice, TDS cert — and placed in the right folder.</p>
+        </div>
+
+        <div style="text-align:center;">
+          <div style="width:52px;height:52px;border-radius:14px;background:#D4EDDA;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;border:3px solid white;box-shadow:0 0 0 2px #D4EDDA;">📊</div>
+          <h3 style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink);">Convert & Structure</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.5;">PDFs converted to structured Excel. Data extracted, formatted, and ready — no manual copying.</p>
+        </div>
+
+        <div style="text-align:center;">
+          <div style="width:52px;height:52px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;border:3px solid white;box-shadow:0 0 0 2px var(--accent);">✅</div>
+          <h3 style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--ink);">Final Ready Docs</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.5;">AIS, 26AS, GSTR-2B reconciled. Mismatches flagged. You get one clean, filing-ready document package.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Outcome pill -->
+    <div style="margin-top:40px;text-align:center;">
+      <div style="display:inline-flex;align-items:center;gap:10px;background:white;border:1px solid var(--border);border-radius:100px;padding:12px 24px;font-size:13px;font-weight:500;color:var(--ink);">
+        <span style="color:var(--accent);">●</span>
+        You open Caly. Documents are already there. Everything is done.
+      </div>
+    </div>
+  </section>
+
+  <section class="problems">
+    <div class="problems-inner">
+      <div class="section-label">The problem</div>
+      <h2>Every CA firm loses weeks<br/>to the same manual work</h2>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <span class="tag">Document chaos</span>
+          <p>Chasing clients over WhatsApp for documents. Files arrive in random formats, at random times.</p>
+        </div>
+        <div class="problem-card">
+          <span class="tag">PDF hell</span>
+          <p>Hours spent manually copying data from PDF statements into Excel. Every. Single. Month.</p>
+        </div>
+        <div class="problem-card">
+          <span class="tag">Reconciliation errors</span>
+          <p>Mismatches between AIS, 26AS, and GSTR-2B discovered late — during filing, not before.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="section-label">What Caly does</div>
+    <h2>AI built specifically<br/>for compliance work</h2>
+    <div class="feature-list">
+      <div class="feature-item accent-border">
+        <h3>WhatsApp Document Intake</h3>
+        <p>AI automatically classifies and organises every file clients send on WhatsApp. No manual sorting.</p>
+      </div>
+      <div class="feature-item">
+        <h3>AI PDF-to-Excel Pipeline</h3>
+        <p>Large language models extract data from bank statements, invoices, and TDS certificates with near-zero errors.</p>
+      </div>
+      <div class="feature-item">
+        <h3>AIS vs 26AS Reconciliation</h3>
+        <p>AI matches transactions across AIS, 26AS, and GSTR-2B, flags mismatches, and explains discrepancies in plain language.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Intelligent Anomaly Detection</h3>
+        <p>AI flags unusual entries, duplicate transactions, and potential compliance risks before you file — not after.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI SECTION -->
+  <section style="background: var(--accent-soft); padding: 80px 48px;">
+    <div style="max-width: 860px; margin: 0 auto;">
+      <div class="section-label">Powered by AI</div>
+      <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(28px,4vw,42px); letter-spacing:-0.5px; margin-bottom:40px; line-height:1.15;">Not automation.<br/>Actual intelligence.</h2>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:24px;">
+        <div style="background:white; border-radius:12px; padding:24px; border:1px solid var(--border);">
+          <div style="font-size:28px; margin-bottom:12px;">🧠</div>
+          <h3 style="font-size:15px; font-weight:600; margin-bottom:8px;">Large Language Models</h3>
+          <p style="font-size:13px; color:var(--muted); line-height:1.6;">Reads PDFs the way a human would — understands context, handles messy formats, extracts the right numbers.</p>
+        </div>
+        <div style="background:white; border-radius:12px; padding:24px; border:1px solid var(--border);">
+          <div style="font-size:28px; margin-bottom:12px;">⚡</div>
+          <h3 style="font-size:15px; font-weight:600; margin-bottom:8px;">Real-Time Processing</h3>
+          <p style="font-size:13px; color:var(--muted); line-height:1.6;">Documents processed in seconds, not hours. Results delivered directly to your workflow — no manual steps.</p>
+        </div>
+        <div style="background:white; border-radius:12px; padding:24px; border:1px solid var(--border);">
+          <div style="font-size:28px; margin-bottom:12px;">🔒</div>
+          <h3 style="font-size:15px; font-weight:600; margin-bottom:8px;">Compliance-Grade Accuracy</h3>
+          <p style="font-size:13px; color:var(--muted); line-height:1.6;">AI trained on Indian tax and compliance workflows. Every output is auditable, traceable, and explainable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="waitlist">
+    <div class="section-label">Early access</div>
+    <h2>Be among the first<br/>CA firms on Caly</h2>
+    <p>We're onboarding select firms for early access. No commitment required.</p>
+    <a href="mailto:hello@calyai.in" class="btn-primary">Request Access → hello@calyai.in</a>
+  </section>
+
+  <footer>
+    <div class="logo" style="font-size:16px;">
+      <span class="logo-dot"></span> Caly AI
+    </div>
+    <span>Built for Indian CA &amp; CS professionals</span>
+  </footer>
+
+</body>
+</html>
